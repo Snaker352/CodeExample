@@ -1,0 +1,256 @@
+
+
+
+
+
+Could help out: https://www.youtube.com/watch?v=QlypJFwxpH0
+
+
+
+
+
+Purple color scheme?
+
+Art inspiration:
+    https://www.oryxdesignlab.com/products/16-bit-fantasy-tileset
+    https://i.pinimg.com/originals/ae/22/88/ae2288cb7fbb6be5f5715f73298a11b1.gif
+    https://external-preview.redd.it/mImYrUzXdl2rqvBHL28I5A1YDBzLGcc5ORX-Z27vGx0.png?auto=webp&s=8d50fe55b24040ba6a25e17bc7b386e943914162
+    https://i.pinimg.com/originals/47/95/2a/47952a3093e54054885528435e8f5220.gif
+    https://pixelartus.tumblr.com/post/167063528886/pixel-art-dioramas-cocefi
+    Maybe do an extremely simplistic design
+
+    https://www.youtube.com/watch?v=tefUYCupvxU
+
+Maybe use this to run an update to every entity
+    https://www.geeksforgeeks.org/double-colon-operator-in-java/
+
+
+https://gamedev.stackexchange.com/questions/46643/should-each-entity-have-its-own-update-and-render-methods
+https://app.assembla.com/wiki/show/java-game-development/Component_Entity_System
+
+
+Color scheme:
+    25, 15, 18
+    76, 50, 45
+    127, 102, 76
+    255, 238, 153
+    -----------------
+    12, 28, 11
+    20, 46, 18
+    29, 69, 25
+    51, 102, 45
+
+
+Enemy is an object that is an entity
+Hero is an object that is an entity
+Structure is an object that is an entity
+Tile is an object
+Item is an object
+
+24x16: helmet
+24x16: chestplate
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+BASICALLY ALL OF THIS IS TODO
+
+Make sure you go and look at "USE THIS METHOD I BEG OF YOU!" (has a giant arrow under it, hard to miss)
+
+
+
+Notes for what I want to do
+
+<--->
+
+
+NEED TO GET RID OF ENTITYMANAGER BEING A SINGLETON
+
+
+Come up with a format for the spritesheets - Need images for:
+    Item:
+        Inventory/ground
+        In hand facing up/down/left/right
+
+    Creature:
+        Head
+        Body
+        Feet/hands
+
+    Buildings/decorations:
+        Structure/decoration
+
+    Tiles/walls:
+        Top
+        Side
+        Variations if wanted
+
+Add animations by rotating and moving images to make it look nice
+Creatures texture - Load in this order:
+    Body slot item texture
+    Helmet slot item texture
+    Hand slot item texture
+    Feet/hands - unattached squircles (circle/square)
+
+Render only whats needed
+
+Have a settings class
+
+Make it so that there's different packages
+
+Make the frames per a second functionality and make the images get reloaded at the same rate no matter the computer speed
+
+Maybe create a log of mouse click positions and once the frame runs, it checks for clicks to load in (should help when the computer lags)
+
+Create an alphabet/character spritesheet
+
+Make the x button set running to false then shut it down after the data is saved
+In Game make it save the data when it stops running
+
+TEXTURES:
+item has texture string of "fire_sword"
+Texture takes the sprite sheet for "fire_sword" and slices it up for each individual frame
+when loading in the texture, it calls getTexture(item_texture_string) and Texture will return a value based on the id
+can also input an animation number to get an animation of the texture
+
+item has a Texture class attached to it
+when the display wants to get an item texture, it will go to the Texture class which will give it an Image.getImage("sfasfsf")
+Texture holds all the data for the animation frame and image ID. It knows what image to get when you request its image.
+Image class is what loads in all the images
+
+Spritesheet format:
+    extends the amount of animation numbers
+
+    For creatures:
+        left/right/up/down: body, head
+        hands, feet
+    For Items:
+        Inventory
+        Left/right/up/down
+    
+
+Just do left and right walking animations. For moving forward and back, just use one of them
+
+Left and right helmet
+
+Spritesheet:
+    Helmet:
+        Front Back Left Right
+
+
+
+USE THIS METHOD I BEG OF YOU!
+ |
+ |
+ |
+ |
+\ /
+ '
+
+If I have the image spritesheet stored in the item instead of the string I can choose how it sends the image to the Display
+Theoretical structure of items:
+Items:
+    Wearable:
+        Helmet orientations
+        Armor orientations
+        Inventory
+    Weapon:
+        Sword orientations
+        Inventory
+    Ingredient:
+        Inventory
+        (maybe a )
+
+
+Color values for the armor
+10
+50
+60
+80
+
+
+PROBLEM: Having the every single class hold the entire image file is way too expensive
+
+<--->
+
+Rotating images: https://stackoverflow.com/questions/8639567/java-rotating-images
+
+Getting an image from a spritesheet: image = image.getSubimage(x, y, w, h);
+
+Set the icon image: https://stackoverflow.com/questions/17383867/set-icon-image-in-java
+
+Drawing images: https://www.pixilart.com/draw?ref=home-page
+
+Isometric math: http://clintbellanger.net/articles/isometric_math/
+
+<--->
+
+CLASSES STRUCTURE:
+
+Entity:
+    Creature
+        Hero
+        Enemy
+    Item
+        Weapon
+        Object (maybe dif name)
+
+<--->
+
+
+
+
+
+
+
+Displaying textures:
+
+
+
+
+Item: Has a Texture class.
+
+Texture:
+    Image: Has a string for the texture name
+    getSprite(): Processes the spritesheet from the Spritesheet holder and returns a final image
+
+Spritesheet:
+    Loads in all the spritesheets
+
+    Wearable:
+        Directions
+        Inventory
+    
+    Weapon:
+        Object
+        Inventory
+    
+    Ingredients:
+        Inventory
+        Object (maybe)
+
+
+
+
+
+
+
+
+
+Describing a challenging part of my code:
+    At first I wanted to have a texture string in the entity class to load the texture when I needed it
+    Next, I decided to load the textures in the entity to make it faster when the program wanter to get the image
+    Next, I made some tiles and I realized that having every tile have its own texture would be terrible and inefficient, so I decided to
+        make it so that the entitys had a string of the texture name and the textures got preloaded into a different class that stored all the textures.
+
+
+Have a left (red) and right (green) side and shade it in to say how much a light source will illuminate it on the left/right. Also have a reflective (blue) level to increase the lighting value
+
+
+
+MAYBE GET RID OF ALL THE STATICS
+
+
+CREDIT:
+
+me: coding, art
